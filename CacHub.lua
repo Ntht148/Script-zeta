@@ -1198,7 +1198,7 @@ local Farming = Tabs.Main:AddSection("Farming")
 local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 
     local DropdownDelayAttack = Tabs.Main:AddDropdown("DropdownDelayAttack", {
-        Title = "Select Fast attack",
+        Title = "Tốc Độ Đánh (Ko nên Chọn Super tỉ lệ reset acc cao)",
         Description = "",
         Values = listfastattack,
         Multi = false,
@@ -1212,12 +1212,12 @@ local listfastattack = {'Normal Attack','Fast Attack','Super Fast Attack'}
 	elseif _G.FastAttackbaptuoihub_Mode == "Normal Attack" then
 		_G.Fast_Delay = 0.09
 	elseif _G.FastAttackbaptuoihub_Mode == "Super Fast Attack" then
-		_G.Fast_Delay = 0.05
+		_G.Fast_Delay = 0.03
 	end
 end)
 
     local DropdownSelectWeapon = Tabs.Main:AddDropdown("DropdownSelectWeapon", {
-        Title = "Chọn Vũ Khí nè",
+        Title = "Weapon",
         Description = "",
         Values = {'Melee','Sword','Blox Fruit'},
         Multi = false,
@@ -1327,3 +1327,30 @@ end)
         end
         end
         end)
+        
+        local ToggleRaid = Tabs.Raid:AddToggle("ToggleRaid", {
+        	Title = "Auto Buy Chip law",
+        Description = "",
+        Default = false })
+_G.Auto_Buy_Law_Chip,function(value)
+ _G.Auto_Buy_Law_Chip = value
+end)
+
+spawn(function()
+	while wait() do
+		if _G.Auto_Buy_Law_Chip then
+			pcall(function()
+				if game:GetService("Players").LocalPlayer.Backpack:FindFirstChild("Microchip") or game:GetService("Players").LocalPlayer.Character:FindFirstChild("Microchip") or game:GetService("Workspace").Enemies:FindFirstChild("Order [Lv. 1250] [Raid Boss]") or game:GetService("ReplicatedStorage"):FindFirstChild("Order [Lv. 1250] [Raid Boss]") then
+				
+				else
+					local args = {
+						[1] = "BlackbeardReward",
+						[2] = "Microchip",
+						[3] = "2"
+					}
+					game:GetService("ReplicatedStorage").Remotes.CommF_:InvokeServer(unpack(args))
+				end
+			end)
+		end
+	end
+end)
